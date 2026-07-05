@@ -25,7 +25,7 @@ phases:
     commands:
       - echo "Building React application..."
       - cd frontend
-      - npm run build
+      - VITE_API_URL=$VITE_API_URL npm run build
       - cd ..
 
   post_build:
