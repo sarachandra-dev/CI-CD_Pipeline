@@ -27,7 +27,16 @@ export default function SharePage() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(code);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(code);
+    } else {
+      const el = document.createElement('textarea');
+      el.value = code;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    }
     setCopied(true);
     toast.success('Code copied to clipboard!');
     setTimeout(() => setCopied(false), 2000);
