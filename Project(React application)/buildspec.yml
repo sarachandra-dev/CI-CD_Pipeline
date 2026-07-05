@@ -4,9 +4,17 @@ phases:
   install:
     runtime-versions:
       nodejs: 18
+
     commands:
-      - cd frontend && npm ci
-      - cd ../backend && npm ci
+      - echo "Installing frontend dependencies..."
+      - cd frontend
+      - npm ci
+
+      - cd ../backend
+      - echo "Installing backend dependencies..."
+      - npm ci
+
+      - cd ..
 
   pre_build:
     commands:
@@ -15,19 +23,18 @@ phases:
 
   build:
     commands:
-      - cd frontend && npm run build
+      - echo "Building React application..."
+      - cd frontend
+      - npm run build
+      - cd ..
 
   post_build:
     commands:
-      - echo "Deploying frontend to S3..."
-      - aws s3 sync frontend/dist s3://$S3_BUCKET --delete
-      - echo "Deploy complete."
+      - echo "Build completed successfully."
 
 artifacts:
   files:
-    - 'frontend/dist/**/*'
-    - 'backend/**/*'
-  discard-paths: no
+    - '**/*'
 
 cache:
   paths:
