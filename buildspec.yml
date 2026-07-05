@@ -31,8 +31,10 @@ phases:
   post_build:
     commands:
       - echo "Build completed successfully."
+      - aws s3 sync frontend/dist s3://$S3_BUCKET --delete
 
 artifacts:
+  base-directory: frontend/dist
   files:
     - '**/*'
 
