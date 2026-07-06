@@ -1,11 +1,6 @@
 const Redis = require('ioredis');
 
-const redis = new Redis({
-  host: 'infallible-kingly-swift-49155.db.redis.io',
-  port: 13363,
-  username: 'default',
-  password: '3UGc2qS1wtbHpvrnjvH2993oFufWia9v',
-  tls: false,
+const redis = new Redis(process.env.REDIS_URL, {
   retryStrategy: (times) => Math.min(times * 500, 3000),
 });
 
